@@ -7,9 +7,39 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        leading: const FlutterLogo(),
+        title: const Text('image search app'),
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: '검색',
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Colors.green,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Colors.green,
+                ),
+              ),
+              suffixIcon: IconButton(
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.cyan,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
