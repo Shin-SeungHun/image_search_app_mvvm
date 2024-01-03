@@ -1,20 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_search_app_mvvm/data/model/image_item.dart';
-import 'package:image_search_app_mvvm/data/repository/pixabay_image_item_repository.dart';
+import 'package:image_search_app_mvvm/data/repository/image_item_repository_impl.dart';
+
+import '../data/repository/interface/image_item_repository.dart';
 
 class MainViewModel extends ChangeNotifier {
-  final PixabayImageItemRepository repository = PixabayImageItemRepository();
+  final ImageItemRepository _repository;
 
-  List<ImageItem> imageItems = [];
+  MainViewModel({
+    required ImageItemRepository repository,
+  }) : _repository = repository;
 
-  bool isLoading = false;
+  List<ImageItem> _imageItems = [];
+
+
+  List<ImageItem> get imageItems => List.unmodifiable(_imageItems);
+  bool _isLoading = false;
+
+
+  bool get isLoading => _isLoading;
+
+  ImageItem? itemId({required num id}) {
+    if (imageItems.isNotEmpty) {
+      return imageItems.firstWhere((image) => image.id == id);
+    }
+    return null;
+  }
 
   searchImage(String query) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
-    imageItems = await repository.getImageItems(query);
-    isLoading = false;
+    _imageItems = await _repository.getImageItems(query);
+
+    _isLoading = false;
     notifyListeners();
   }
 }
