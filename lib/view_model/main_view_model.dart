@@ -3,37 +3,40 @@ import 'package:image_search_app_mvvm/data/model/image_item.dart';
 import 'package:image_search_app_mvvm/data/repository/image_item_repository_impl.dart';
 
 import '../data/repository/interface/image_item_repository.dart';
+import '../ui/state/main_state.dart';
 
 class MainViewModel extends ChangeNotifier {
   final ImageItemRepository _repository;
+
+   MainState _state = MainState(
+    imageItems: List.unmodifiable([]),
+    isLoading: false,
+  );
+
+  MainState get state => _state;
+
 
   MainViewModel({
     required ImageItemRepository repository,
   }) : _repository = repository;
 
-  List<ImageItem> _imageItems = [];
-
-
-  List<ImageItem> get imageItems => List.unmodifiable(_imageItems);
-  bool _isLoading = false;
-
-
-  bool get isLoading => _isLoading;
-
   ImageItem? itemId({required num id}) {
-    if (imageItems.isNotEmpty) {
-      return imageItems.firstWhere((image) => image.id == id);
+    if (_state.imageItems.isNotEmpty) {
+      return _state.정imageItems.firstWhere((image) => image.id == id);
     }
     return null;
   }
 
   searchImage(String query) async {
-    _isLoading = true;
+    _state = state.copyWith(isLoading: true);
     notifyListeners();
 
-    _imageItems = await _repository.getImageItems(query);
-
-    _isLoading = false;
+    // 화면갱신
+    _state = state.copyWith(
+      isLoading: false,
+      imageItems: List.unmodifiable(
+          (await _repository.getImageItems(query)).take(3).toList()),
+    );
     notifyListeners();
   }
 }
