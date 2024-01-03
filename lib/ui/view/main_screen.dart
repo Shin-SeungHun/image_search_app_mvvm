@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_search_app_mvvm/data/model/image_item.dart';
 import 'package:image_search_app_mvvm/view_model/main_view_model.dart';
 import 'package:provider/provider.dart';
@@ -66,25 +67,50 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Expanded(
-                child: GridView.builder(
-                    itemCount: viewModel.imageItems.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 32,
-                            mainAxisSpacing: 32),
-                    itemBuilder: (context, index) {
-                      final ImageItem imageItem = viewModel.imageItems[index];
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image.network(
-                          imageItem.imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    }),
-              )
+              viewModel.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Expanded(
+                      child: GridView.builder(
+                          itemCount: viewModel.imageItems.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 32,
+                                  mainAxisSpacing: 32),
+                          itemBuilder: (context, index) {
+                            final ImageItem imageItem =
+                                viewModel.imageItems[index];
+                            String id =
+                                viewModel.imageItems[index].id?.toString() ??
+                                    'fallback_value';
+                            print('id :$id');
+                            return GestureDetector (
+                              onTap: () async {
+                                print('id :${Uri(
+                                  path: '/detailScreen',
+                                  queryParameters: {'id': id},
+                                ).toString()}');
+                              await  context.push(
+                                  Uri(
+                                      path: '/detailScreen',
+                                      queryParameters: {'id': id}).toString(),
+                                );
+                              },
+                              child: Hero(
+                                tag: 'image_${viewModel.imageItems[index]}',
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Image.network(
+                                    imageItem.imageUrl,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
             ],
           ),
         ),
