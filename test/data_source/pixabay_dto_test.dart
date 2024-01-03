@@ -7,6 +7,6 @@ void main() {
     final PixabayApi api = PixabayApi();
     PixabayDto dto = await api.getImagesResult('apple');
 
-    expect(dto, isNotNull);
+    expect(dto.hits?.map((e) => e.id), isNotNull);
   });
 }
