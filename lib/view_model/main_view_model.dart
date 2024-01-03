@@ -8,10 +8,7 @@ import '../ui/state/main_state.dart';
 class MainViewModel extends ChangeNotifier {
   final ImageItemRepository _repository;
 
-   MainState _state = MainState(
-    imageItems: List.unmodifiable([]),
-    isLoading: false,
-  );
+  MainState _state = const MainState();
 
   MainState get state => _state;
 
@@ -27,15 +24,17 @@ class MainViewModel extends ChangeNotifier {
     return null;
   }
 
-  searchImage(String query) async {
+  Future<void> searchImage(String query) async {
+    // 화면갱신
     _state = state.copyWith(isLoading: true);
     notifyListeners();
+
+    final results = (await _repository.getImageItems(query));
 
     // 화면갱신
     _state = state.copyWith(
       isLoading: false,
-      imageItems: List.unmodifiable(
-          (await _repository.getImageItems(query)).take(3).toList()),
+      imageItems: results,
     );
     notifyListeners();
   }
