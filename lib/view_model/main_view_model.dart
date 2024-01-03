@@ -22,7 +22,7 @@ class MainViewModel extends ChangeNotifier {
 
   ImageItem? itemId({required num id}) {
     if (_state.imageItems.isNotEmpty) {
-      return _state.정imageItems.firstWhere((image) => image.id == id);
+      return _state.imageItems.firstWhere((image) => image.id == id);
     }
     return null;
   }
