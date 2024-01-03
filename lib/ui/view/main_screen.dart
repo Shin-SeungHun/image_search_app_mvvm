@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_search_app_mvvm/data/model/image_item.dart';
+import 'package:image_search_app_mvvm/ui/state/main_state.dart';
 import 'package:image_search_app_mvvm/view_model/main_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final MainViewModel viewModel = context.watch<MainViewModel>();
+    final MainState state = viewModel.state;
     return Scaffold(
       appBar: AppBar(
         leading: const FlutterLogo(),
@@ -67,39 +69,38 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              viewModel.isLoading
+              state.isLoading
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : Expanded(
                       child: GridView.builder(
-                          itemCount: viewModel.imageItems.length,
+                          itemCount: state.imageItems.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 32,
                                   mainAxisSpacing: 32),
                           itemBuilder: (context, index) {
-                            final ImageItem imageItem =
-                                viewModel.imageItems[index];
+                            final ImageItem imageItem = state.imageItems[index];
                             String id =
-                                viewModel.imageItems[index].id?.toString() ??
+                                state.imageItems[index].id?.toString() ??
                                     'fallback_value';
                             print('id :$id');
-                            return GestureDetector (
+                            return GestureDetector(
                               onTap: () async {
                                 print('id :${Uri(
                                   path: '/detailScreen',
                                   queryParameters: {'id': id},
                                 ).toString()}');
-                              await  context.push(
+                                await context.push(
                                   Uri(
                                       path: '/detailScreen',
                                       queryParameters: {'id': id}).toString(),
                                 );
                               },
                               child: Hero(
-                                tag: 'image_${viewModel.imageItems[index]}',
+                                tag: 'image_${state.imageItems[index]}',
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20.0),
                                   child: Image.network(
