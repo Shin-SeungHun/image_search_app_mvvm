@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_search_app_mvvm/data/model/image_item.dart';
+import 'package:image_search_app_mvvm/ui/event/main_event.dart';
 import 'package:image_search_app_mvvm/ui/state/main_state.dart';
 import 'package:image_search_app_mvvm/view_model/main_view_model.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +18,40 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController searchTextEditingController =
       TextEditingController();
+  StreamSubscription<MainEvent>? subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      subscription = context.read<MainViewModel>().eventStream.listen((event) {
+        switch (event) {
+          case ShowSnackBar():
+            final snackBar = SnackBar(content: Text(event.message));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+          case ShowDialog():
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text(event.message),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text('확인'),
+                      ),
+                    ],
+                  );
+                });
+        }
+      });
+    });
+  }
 
   @override
   void dispose() {
+    subscription?.cancel();
     searchTextEditingController.dispose();
     super.dispose();
   }
@@ -38,9 +72,10 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               TextField(
                 controller: searchTextEditingController,
-                onChanged: (query) {
-                  viewModel.searchImage(query);
-                },
+                // 실시간 검색
+                // onChanged: (query) {
+                //   viewModel.searchImage(query);
+                // },
                 decoration: InputDecoration(
                   labelText: '검색',
                   focusedBorder: OutlineInputBorder(
