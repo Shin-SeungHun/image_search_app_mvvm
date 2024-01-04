@@ -19,39 +19,39 @@ mixin _$MainEvent {
   String get message => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) success,
-    required TResult Function(String message) error,
+    required TResult Function(String message) showSnackBar,
+    required TResult Function(String message) dialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? success,
-    TResult? Function(String message)? error,
+    TResult? Function(String message)? showSnackBar,
+    TResult? Function(String message)? dialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? success,
-    TResult Function(String message)? error,
+    TResult Function(String message)? showSnackBar,
+    TResult Function(String message)? dialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShowSnackBar value) success,
-    required TResult Function(ShowDialog value) error,
+    required TResult Function(ShowSnackBar value) showSnackBar,
+    required TResult Function(ShowDialog value) dialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ShowSnackBar value)? success,
-    TResult? Function(ShowDialog value)? error,
+    TResult? Function(ShowSnackBar value)? showSnackBar,
+    TResult? Function(ShowDialog value)? dialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShowSnackBar value)? success,
-    TResult Function(ShowDialog value)? error,
+    TResult Function(ShowSnackBar value)? showSnackBar,
+    TResult Function(ShowDialog value)? dialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -136,14 +136,14 @@ class _$ShowSnackBarImpl with DiagnosticableTreeMixin implements ShowSnackBar {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MainEvent.success(message: $message)';
+    return 'MainEvent.showSnackBar(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MainEvent.success'))
+      ..add(DiagnosticsProperty('type', 'MainEvent.showSnackBar'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -167,30 +167,30 @@ class _$ShowSnackBarImpl with DiagnosticableTreeMixin implements ShowSnackBar {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) success,
-    required TResult Function(String message) error,
+    required TResult Function(String message) showSnackBar,
+    required TResult Function(String message) dialog,
   }) {
-    return success(message);
+    return showSnackBar(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? success,
-    TResult? Function(String message)? error,
+    TResult? Function(String message)? showSnackBar,
+    TResult? Function(String message)? dialog,
   }) {
-    return success?.call(message);
+    return showSnackBar?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? success,
-    TResult Function(String message)? error,
+    TResult Function(String message)? showSnackBar,
+    TResult Function(String message)? dialog,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(message);
+    if (showSnackBar != null) {
+      return showSnackBar(message);
     }
     return orElse();
   }
@@ -198,30 +198,30 @@ class _$ShowSnackBarImpl with DiagnosticableTreeMixin implements ShowSnackBar {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShowSnackBar value) success,
-    required TResult Function(ShowDialog value) error,
+    required TResult Function(ShowSnackBar value) showSnackBar,
+    required TResult Function(ShowDialog value) dialog,
   }) {
-    return success(this);
+    return showSnackBar(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ShowSnackBar value)? success,
-    TResult? Function(ShowDialog value)? error,
+    TResult? Function(ShowSnackBar value)? showSnackBar,
+    TResult? Function(ShowDialog value)? dialog,
   }) {
-    return success?.call(this);
+    return showSnackBar?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShowSnackBar value)? success,
-    TResult Function(ShowDialog value)? error,
+    TResult Function(ShowSnackBar value)? showSnackBar,
+    TResult Function(ShowDialog value)? dialog,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (showSnackBar != null) {
+      return showSnackBar(this);
     }
     return orElse();
   }
@@ -281,14 +281,14 @@ class _$ShowDialogImpl with DiagnosticableTreeMixin implements ShowDialog {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MainEvent.error(message: $message)';
+    return 'MainEvent.dialog(message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MainEvent.error'))
+      ..add(DiagnosticsProperty('type', 'MainEvent.dialog'))
       ..add(DiagnosticsProperty('message', message));
   }
 
@@ -312,30 +312,30 @@ class _$ShowDialogImpl with DiagnosticableTreeMixin implements ShowDialog {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String message) success,
-    required TResult Function(String message) error,
+    required TResult Function(String message) showSnackBar,
+    required TResult Function(String message) dialog,
   }) {
-    return error(message);
+    return dialog(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? success,
-    TResult? Function(String message)? error,
+    TResult? Function(String message)? showSnackBar,
+    TResult? Function(String message)? dialog,
   }) {
-    return error?.call(message);
+    return dialog?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? success,
-    TResult Function(String message)? error,
+    TResult Function(String message)? showSnackBar,
+    TResult Function(String message)? dialog,
     required TResult orElse(),
   }) {
-    if (error != null) {
-      return error(message);
+    if (dialog != null) {
+      return dialog(message);
     }
     return orElse();
   }
@@ -343,30 +343,30 @@ class _$ShowDialogImpl with DiagnosticableTreeMixin implements ShowDialog {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ShowSnackBar value) success,
-    required TResult Function(ShowDialog value) error,
+    required TResult Function(ShowSnackBar value) showSnackBar,
+    required TResult Function(ShowDialog value) dialog,
   }) {
-    return error(this);
+    return dialog(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ShowSnackBar value)? success,
-    TResult? Function(ShowDialog value)? error,
+    TResult? Function(ShowSnackBar value)? showSnackBar,
+    TResult? Function(ShowDialog value)? dialog,
   }) {
-    return error?.call(this);
+    return dialog?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ShowSnackBar value)? success,
-    TResult Function(ShowDialog value)? error,
+    TResult Function(ShowSnackBar value)? showSnackBar,
+    TResult Function(ShowDialog value)? dialog,
     required TResult orElse(),
   }) {
-    if (error != null) {
-      return error(this);
+    if (dialog != null) {
+      return dialog(this);
     }
     return orElse();
   }

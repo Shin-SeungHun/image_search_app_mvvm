@@ -5,6 +5,7 @@ part 'main_event.freezed.dart';
 
 @freezed
 sealed class MainEvent with _$MainEvent {
-  const factory MainEvent.success(String message) = ShowSnackBar;
-  const factory MainEvent.error(String message) = ShowDialog;
+  const factory MainEvent.showSnackBar(String message) = ShowSnackBar;
+
+  const factory MainEvent.dialog(String message) = ShowDialog;
 }
